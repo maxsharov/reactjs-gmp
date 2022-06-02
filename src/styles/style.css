@@ -1,0 +1,42 @@
+@import "montserrat.css";
+
+:root {
+  --page-pad: 1rem;
+  --main-color: #F65261;
+  --dark-grey-color: #424242;
+  --grey-color: #555555;
+  --color-white: rgba(255, 255, 255, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgba(136, 136, 136, 0.5);
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+}
+
+input[type="text"] {
+  background: rgba(50, 50, 50, 0.8);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.3);
+  padding: 0 20px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: calc(var(--page-pad) * 1.25);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main {
+  background: #232323;
+  margin-top: 10px;
+  padding: 0 60px;
+}

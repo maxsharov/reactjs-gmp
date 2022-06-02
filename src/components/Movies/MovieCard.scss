@@ -1,0 +1,103 @@
+.movieCard {
+  flex: 1 0 calc(33% - 10px);
+  color: #FFFFFFB2;
+  font-weight: 500;
+  margin-bottom: 50px;
+
+  &--content {
+    width: 320px;
+    margin: 0 auto;
+    position: relative;
+
+    .menu-link {
+      display: none;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: #2A202D;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.196596);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+
+
+      &:after {
+        position: absolute;
+        content: '\22ee';
+        color: #ffffff;
+        font-size: 30px;
+        left: 11px;
+        top: -1px;
+        z-index: 1;
+      }
+    }
+    &:hover .menu-link {
+      display: block;
+    }
+  }
+
+  .movieCardMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    background: rgba(35, 35, 35);
+    border-radius: 4px;
+    right: 10px;
+    top: 10px;
+    width: 190px;
+    z-index: 20;
+
+    ul {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    li {
+      height: 34px;
+      padding-left: 23px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--main-color);
+      }
+    }
+
+    &--close {
+      cursor: pointer;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  &--img {
+    margin-bottom: 20px;
+
+    img {
+      width: 320px;
+    }
+  }
+
+  &--titleYear {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  &--title {
+    font-size: calc(var(--page-pad) * 1.1);
+    line-height: calc(var(--page-pad) * 1.4);
+  }
+  &--year {
+    border: 1px solid var(--grey-color);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: calc(var(--page-pad) * 0.9);
+  }
+  &--tagline {
+    font-size: calc(var(--page-pad) * 0.9);
+    opacity: 0.5;
+  }
+}
+

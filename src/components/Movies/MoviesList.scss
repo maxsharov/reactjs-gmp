@@ -1,0 +1,18 @@
+.movies {
+  &--total {
+    display: block;
+    color: var(--color-white);
+    font-size: calc(var(--page-pad) * 1.25);
+    margin-bottom: 27px;
+
+    &-value {
+      font-weight: 600;
+    }
+  }
+
+  &--list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
