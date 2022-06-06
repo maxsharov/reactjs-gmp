@@ -6,8 +6,8 @@ import styles from './MovieFilterBar.scss'
 const genres = ['All','Documentary','Comedy','Horror','Crime']
 
 const MovieFilterBar: FC = () => {
-  const activeGenre: string = 'All'
-  const activeSort: string = 'Release Date'
+  const activeGenre = 'All'
+  const activeSort = 'Release Date'
 
   return (
     <div className={styles['movieFilterBar']}>
@@ -16,11 +16,14 @@ const MovieFilterBar: FC = () => {
           return (<li
             className={classNames(
               styles['movieFilterBar--genre'],
-              activeGenre === genre &&
-                styles['movieFilterBar--genre-active']
+              {
+                'movieFilterBar--genre-active': activeGenre === genre
+              }
             )}
             key={genre}
-          >{genre}</li>)
+          >
+            {genre}
+          </li>)
         })}
       </ul>
       <div className={styles['movieFilterBar--sort']}>

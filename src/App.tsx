@@ -1,11 +1,10 @@
 import React, { FC } from "react"
-import { ErrorBoundary } from 'react-error-boundary'
 
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Header from "./components/Layout/Header"
 import Footer from "./components/Layout/Footer"
 import MovieFilterBar from "./components/Movies/MovieFilterBar"
 import MoviesList from "./components/Movies/MoviesList"
-import ErrorFallback from "./components/ErrorFallback";
 
 const movies = {
   "totalAmount": 3000,
@@ -133,7 +132,7 @@ const movies = {
 
 const App: FC = () => {
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <ErrorBoundary>
       <Header/>
       <main>
         <MovieFilterBar />

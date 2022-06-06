@@ -31,7 +31,6 @@
     "css-modules-typescript-loader": "^4.0.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
-    "react-error-boundary": "^3.1.4",
     "sass": "^1.52.1",
     "sass-loader": "^13.0.0",
     "style-loader": "^3.3.1",
