@@ -17,7 +17,7 @@ const MovieFilterBar: FC = () => {
             className={classNames(
               styles['movieFilterBar--genre'],
               {
-                'movieFilterBar--genre-active': activeGenre === genre
+                [styles['movieFilterBar--genre-active']]: activeGenre === genre
               }
             )}
             key={genre}

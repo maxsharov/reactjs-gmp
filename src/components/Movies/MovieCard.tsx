@@ -3,17 +3,22 @@ import { Movie } from "../../interfaces";
 
 import styles from './MovieCard.scss'
 
-type MovieCardProps = Movie
+interface MovieCardProps {
+  title: string
+  posterPath: string
+  releaseDate: string
+  genres: string[]
+}
 
 const MovieCard: FC<MovieCardProps> = ({
   title,
-  poster_path,
-  release_date,
+  posterPath,
+  releaseDate,
   genres
 }) => {
   const [menuVisible, setMenuVisible] = useState(false)
 
-  const year = release_date.substring(0, 4)
+  const year = releaseDate.substring(0, 4)
 
   const showMenu = () => setMenuVisible(true)
   const hideMenu = () => setMenuVisible(false)
@@ -40,14 +45,16 @@ const MovieCard: FC<MovieCardProps> = ({
           </ul>
         </div>}
         <div className={styles['movieCard--img']}>
-          <img src={poster_path} />
+          <img src={posterPath} />
         </div>
 
         <div className={styles['movieCard--titleYear']}>
           <div className={styles['movieCard--title']}>{title}</div>
           <div className={styles['movieCard--year']}>{year}</div>
         </div>
-        {genres.length > 0 && <div className={styles['movieCard--tagline']}>{genres.join(', ')}</div>}
+        {genres.length > 0 &&
+          <div className={styles['movieCard--tagline']}>{genres.join(', ')}</div>
+        }
       </div>
     </div>
     )
