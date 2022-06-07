@@ -6,12 +6,15 @@ import Logo from './Logo'
 
 import styles from './Header.scss'
 
-const Header: FC = () => {
+const Header: FC<{ handleAddMovie: () => void }> = ({
+  handleAddMovie
+}) => {
   return <div className={styles["header"]}>
     <div className={styles["top-section"]}>
       <Logo />
       <div className="add-movie-btn">
         <Button
+          onClick={handleAddMovie}
           outlined
         >+ ADD MOVIE</Button>
       </div>

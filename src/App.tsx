@@ -1,10 +1,11 @@
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Header from "./components/Layout/Header"
 import Footer from "./components/Layout/Footer"
 import MovieFilterBar from "./components/Movies/MovieFilterBar"
 import MoviesList from "./components/Movies/MoviesList"
+import AddMovie from "./components/Movies/AddMovie";
 
 const movies = {
   "totalAmount": 3000,
@@ -131,14 +132,19 @@ const movies = {
 }
 
 const App: FC = () => {
+  const [isAddMovieOpened, handleAddMovieVisibility] = useState<boolean>(false)
+
   return (
     <ErrorBoundary>
-      <Header/>
+     <Header
+        handleAddMovie={() => handleAddMovieVisibility(true)}
+      />
       <main>
         <MovieFilterBar />
         <MoviesList moviesTotal={movies.totalAmount} movies={movies.data}/>
       </main>
       <Footer />
+      {isAddMovieOpened && <AddMovie onClose={() => handleAddMovieVisibility(false)} />}
     </ErrorBoundary>
   )
 }

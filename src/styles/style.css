@@ -5,6 +5,7 @@
   --main-color: #F65261;
   --dark-grey-color: #424242;
   --grey-color: #555555;
+  --black-color: #232323;
   --color-white: rgba(255, 255, 255, 0.7);
 }
 
@@ -18,7 +19,8 @@ body {
   margin: 0;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="date"] {
   background: rgba(50, 50, 50, 0.8);
   border: 1px solid transparent;
   border-radius: 4px;
@@ -40,3 +42,4 @@ main {
   margin-top: 10px;
   padding: 0 60px;
 }
+
