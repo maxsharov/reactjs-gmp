@@ -1,0 +1,24 @@
+.search-bar {
+  padding: 0 120px;
+
+  h2 {
+    font-size: calc(var(--page-pad) * 2.5);
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+
+  &--content {
+    display: flex;
+
+    input {
+      margin-right: 14px;
+      width: 100%;
+    }
+
+    .search-bar-btn {
+      width: 233px;
+    }
+  }
+}
+

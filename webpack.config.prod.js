@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
   mode: "production",
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     clean: true,
     chunkFilename: "[name].bundle.js",
@@ -13,7 +13,7 @@ module.exports = {
     path: path.join(__dirname, 'build')
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
   },
   devServer: {
     port: 8000,
@@ -28,11 +28,30 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(ts|tsx)?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
         }
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-modules-typescript-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          'sass-loader'
+        ]
       },
       {
         test: /\.css$/,

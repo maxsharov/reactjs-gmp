@@ -1,0 +1,12 @@
+.header {
+  background-image: url("../../assets/header-bg.png");
+  background-size: cover;
+  height: 396px;
+
+  .top-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 60px;
+    padding-top: 20px;
+  }
+}

@@ -1,0 +1,46 @@
+.movieFilterBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-top: 20px;
+
+  border-image: linear-gradient(to top, #080707 1px, transparent 1px, #424242 2px) 4;
+  border-bottom: 4px solid;
+  color: var(--color-white);
+
+  &--genres {
+    display: flex;
+  }
+
+  &--genre {
+    margin-right: 30px;
+    text-transform: uppercase;
+    padding-bottom: 20px;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    position: relative;
+    top: 4px;
+
+    &-active {
+      border-bottom-color: red;
+    }
+  }
+
+  &--sort {
+    display: flex;
+
+    &-title {
+      opacity: 0.6;
+      margin-right: 30px;
+    }
+    &-val {
+      font-weight: 500;
+    }
+  }
+
+  &--arrow {
+    color: var(--main-color);
+    cursor: pointer;
+    margin-left: 15px;
+  }
+}

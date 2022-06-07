@@ -3,18 +3,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: "development",
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'dev'),
     clean: true
   },
+  watch: true,
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
   },
   devtool: 'eval-cheap-module-source-map',
   devServer: {
     hot: true,
     port: 9000,
+    open: true,
     compress: true
   },
   optimization: {
@@ -25,6 +27,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(ts|tsx)?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
@@ -34,6 +41,20 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-modules-typescript-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          'sass-loader'
+        ]
       },
       {
         test: /\.(png|jpe?g|svg|gif)$/i,

@@ -1,0 +1,11 @@
+.logo {
+  font-size: calc(var(--page-pad) * 1.25);
+  color: var(--main-color);
+
+  &--bold {
+    font-weight: 900;
+  }
+  &--light {
+    font-weight: 500;
+  }
+}
