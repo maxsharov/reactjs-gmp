@@ -1,13 +1,31 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEventHandler } from 'react'
 import classNames from "classnames"
 
 import styles from './MovieFilterBar.scss'
 
+import {SortOrderType} from "../../App";
+
 const genres = ['All','Documentary','Comedy','Horror','Crime']
 
-const MovieFilterBar: FC = () => {
+interface MovieFilterBarProps {
+  sortOrder: SortOrderType
+  onSortOrderChange: (k: SortOrderType) => void
+}
+
+const MovieFilterBar: FC<MovieFilterBarProps> = ({
+  sortOrder,
+  onSortOrderChange
+}) => {
   const activeGenre = 'All'
   const activeSort = 'Release Date'
+
+  const invertSortOrder = () => {
+    if (sortOrder === 'asc') {
+      onSortOrderChange('desc')
+    } else {
+      onSortOrderChange('asc')
+    }
+  }
 
   return (
     <div className={styles['movieFilterBar']}>
@@ -28,8 +46,18 @@ const MovieFilterBar: FC = () => {
       </ul>
       <div className={styles['movieFilterBar--sort']}>
         <div className={styles['movieFilterBar--sort-title']}>Sort by</div>
-        <div className={styles['movieFilterBar--sort-val']}>Release Date</div>
-        <div className={styles['movieFilterBar--arrow']}>&#9650;</div>
+        <div
+          onClick={invertSortOrder}
+          className={styles['movieFilterBar--sort-val']}
+        >Release Date</div>
+        <div
+          className={classNames(
+            styles['movieFilterBar--arrow'],
+            {
+              [styles['movieFilterBar--arrow-down']]: sortOrder === 'desc'
+            }
+          )}
+        >&#9650;</div>
       </div>
     </div>
   )

@@ -28,6 +28,7 @@
 
   &--sort {
     display: flex;
+    height: 19px;
 
     &-title {
       opacity: 0.6;
@@ -35,6 +36,7 @@
     }
     &-val {
       font-weight: 500;
+      cursor: pointer;
     }
   }
 
@@ -42,5 +44,9 @@
     color: var(--main-color);
     cursor: pointer;
     margin-left: 15px;
+
+    &-down {
+      transform: rotate(180deg);
+    }
   }
 }

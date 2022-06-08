@@ -1,11 +1,16 @@
-import React, { FC, useState } from "react"
+import React, {FC, MouseEventHandler, useEffect, useState} from "react"
 
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Header from "./components/Layout/Header"
 import Footer from "./components/Layout/Footer"
 import MovieFilterBar from "./components/Movies/MovieFilterBar"
 import MoviesList from "./components/Movies/MoviesList"
-import AddMovie from "./components/Movies/AddMovie";
+// import AddMovie from "./components/Movies/AddMovie";
+
+import { MovieResponse } from "./interfaces";
+import AddMovieModal from "./components/Movies/AddMovieModal";
+
+export type SortOrderType = 'asc' | 'desc'
 
 const movies = {
   "totalAmount": 3000,
@@ -133,18 +138,59 @@ const movies = {
 
 const App: FC = () => {
   const [isAddMovieOpened, handleAddMovieVisibility] = useState<boolean>(false)
+  const [sortedMovies, setSortedMovies] = useState<MovieResponse[]>(movies.data)
+  const [sortOrder, setSortOrder] = useState<SortOrderType>('asc')
+
+  const showAddMovieModal = () => {
+    handleAddMovieVisibility(true)
+  }
+  const hideAddMovieModal = () => {
+    handleAddMovieVisibility(false)
+  }
+
+  const sortMovies = () => {
+    const sortByProp = 'release_date'
+
+    let sorted
+
+    if (sortOrder === 'asc') {
+      sorted = [...movies.data].sort((a, b) =>
+        new Date(a[sortByProp]).getTime() - new Date(b[sortByProp]).getTime()
+      )
+    } else {
+      sorted = [...movies.data].sort((a, b) =>
+        new Date(b[sortByProp]).getTime() - new Date(a[sortByProp]).getTime()
+      )
+    }
+
+    setSortedMovies(sorted)
+  }
+
+  const handleSortOrderChange = (sorting: SortOrderType) => {
+    setSortOrder(sorting)
+  }
+
+  useEffect(() => {
+    sortMovies()
+  }, [sortOrder])
 
   return (
     <ErrorBoundary>
-     <Header
-        handleAddMovie={() => handleAddMovieVisibility(true)}
-      />
+      <Header handleAddMovie={showAddMovieModal} />
       <main>
-        <MovieFilterBar />
-        <MoviesList moviesTotal={movies.totalAmount} movies={movies.data}/>
+        <MovieFilterBar
+          sortOrder={sortOrder}
+          onSortOrderChange={handleSortOrderChange}
+        />
+        <MoviesList
+          moviesTotal={movies.totalAmount}
+          movies={sortedMovies}
+        />
       </main>
-      <Footer />
-      {isAddMovieOpened && <AddMovie onClose={() => handleAddMovieVisibility(false)} />}
+      <Footer/>
+      {isAddMovieOpened &&
+        <AddMovieModal onClose={hideAddMovieModal}/>
+      }
     </ErrorBoundary>
   )
 }

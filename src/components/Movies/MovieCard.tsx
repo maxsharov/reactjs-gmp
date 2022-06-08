@@ -1,36 +1,72 @@
 import React, { FC, useState } from 'react'
-import { Movie } from "../../interfaces";
+
+import DeleteMovieModal from "./DeleteMovieModal";
+import EditMovieModal from "./EditMovieModal";
 
 import styles from './MovieCard.scss'
 
-interface MovieCardProps {
-  title: string
-  posterPath: string
-  releaseDate: string
-  genres: string[]
+export interface Movie {
+  title?: string
+  posterPath?: string
+  releaseDate?: string
+  year?: string
+  rating?: number
+  runtime?: number
+  overview?: string
+  genres?: string[]
 }
+
+type MovieCardProps = Movie
 
 const MovieCard: FC<MovieCardProps> = ({
   title,
   posterPath,
   releaseDate,
+  year,
+  rating,
+  runtime,
+  overview,
   genres
 }) => {
-  const [menuVisible, setMenuVisible] = useState(false)
+  const [isMenuOpened, handleMenuVisibility] = useState<boolean>(false)
+  const [isDeleteMovieOpened, handleDeleteMovieVisibility] = useState<boolean>(false)
+  const [isEditMovieOpened, handleEditMovieVisibility] = useState<boolean>(false)
 
-  const year = releaseDate.substring(0, 4)
+  const showMenu = () => handleMenuVisibility(true)
+  const hideMenu = () => handleMenuVisibility(false)
 
-  const showMenu = () => setMenuVisible(true)
-  const hideMenu = () => setMenuVisible(false)
+  const showDeleteMovieModal = () => {
+    handleMenuVisibility(false)
+    handleDeleteMovieVisibility(true)
+  }
+  const hideDeleteMovieModal = () => handleDeleteMovieVisibility(false)
+
+  const showEditMovieModal = () => {
+    handleMenuVisibility(false)
+    handleEditMovieVisibility(true)
+  }
+  const hideEditMovieModal = () => handleEditMovieVisibility(false)
 
   return (
     <div className={styles['movieCard']}>
+      {isDeleteMovieOpened && <DeleteMovieModal onClose={hideDeleteMovieModal} />}
+      {isEditMovieOpened &&
+        <EditMovieModal
+          title={title}
+          rating={rating}
+          overview={overview}
+          releaseDate={releaseDate}
+          runtime={runtime}
+          genres={genres}
+          onClose={hideEditMovieModal}
+        />
+      }
       <div className={styles['movieCard--content']}>
         <div
           className={styles['menu-link']}
           onClick={showMenu}
         ></div>
-        {menuVisible && <div
+        {isMenuOpened && <div
           className={styles['movieCardMenu']}
         >
           <div
@@ -40,8 +76,8 @@ const MovieCard: FC<MovieCardProps> = ({
             X
           </div>
           <ul>
-            <li>Edit</li>
-            <li>Delete</li>
+            <li onClick={showEditMovieModal}>Edit</li>
+            <li onClick={showDeleteMovieModal}>Delete</li>
           </ul>
         </div>}
         <div className={styles['movieCard--img']}>
@@ -57,7 +93,7 @@ const MovieCard: FC<MovieCardProps> = ({
         }
       </div>
     </div>
-    )
+  )
 }
 
 export default MovieCard
