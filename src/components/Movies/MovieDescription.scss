@@ -1,0 +1,89 @@
+.heading-nav {
+  background-color: var(--black-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 35px 60px 0;
+
+  &--mini-logo {
+    color: var(--main-color);
+  }
+  &--search-link {
+    color: var(--main-color);
+    font-size: calc(var(--page-pad) * 3);
+    cursor: pointer;
+  }
+}
+
+.movie-description {
+  background-color: var(--black-color);
+  height: 606px;
+  padding: 60px;
+  display: flex;
+
+  &--image {
+    width: 330px;
+
+    img {
+      max-width: 323px;
+    }
+  }
+
+  &--details {
+    margin-left: 25px
+  }
+}
+
+.details {
+  &--heading-rating {
+    display: flex;
+  }
+  &--heading {
+    font-size: calc(var(--page-pad) * 2.5);
+    line-height: calc(var(--page-pad) * 3);
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin: 0;
+  }
+  &--rating {
+    color: #FFFFFF;
+    border-radius: 50%;
+    border: 1px solid #FFFFFF;
+    font-size: calc(var(--page-pad) * 1.25);
+    font-weight: 300;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: -7px;
+    margin-left: 25px;
+  }
+  &--genre {
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 30px;
+
+    font-size: calc(var(--page-pad) * 0.9);
+    line-height: calc(var(--page-pad) * 1.05);
+    font-weight: 500;
+  }
+  &--year-time {
+    color: var(--main-color);
+    margin-bottom: 30px;
+    font-size: calc(var(--page-pad) * 1.5);
+    line-height: calc(var(--page-pad) * 1.8);
+    font-weight: 300;
+
+    display: flex;
+  }
+  &--year {
+    margin-right: 50px;
+  }
+  &--overview {
+    color: rgba(255,255,255,0.5);
+    font-size: calc(var(--page-pad) * 1.25);
+    line-height: calc(var(--page-pad) * 1.5);
+    font-weight: 300;
+  }
+}

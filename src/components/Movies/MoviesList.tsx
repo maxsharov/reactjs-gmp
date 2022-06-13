@@ -8,11 +8,13 @@ import styles from './MoviesList.scss'
 interface MoviesListProps {
   movies: MovieResponse[]
   moviesTotal: number
+  onMovieSelect: (id: number) => void
 }
 
 const MoviesList: FC<MoviesListProps> = ({
   movies,
-  moviesTotal
+  moviesTotal,
+  onMovieSelect,
 }) => {
   return (
     <div>
@@ -47,7 +49,7 @@ const MoviesList: FC<MoviesListProps> = ({
               overview,
             }
 
-            return <MovieCard key={id} {...movieCardProps} />
+            return <MovieCard key={id} onMovieSelect={onMovieSelect} {...movieCardProps} />
           })}
       </div>
     </div>

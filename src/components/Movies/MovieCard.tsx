@@ -6,6 +6,7 @@ import EditMovieModal from "./EditMovieModal";
 import styles from './MovieCard.scss'
 
 export interface Movie {
+  id?: number
   title?: string
   posterPath?: string
   releaseDate?: string
@@ -14,11 +15,13 @@ export interface Movie {
   runtime?: number
   overview?: string
   genres?: string[]
+  onMovieSelect?: (id: number) => void
 }
 
 type MovieCardProps = Movie
 
 const MovieCard: FC<MovieCardProps> = ({
+  id,
   title,
   posterPath,
   releaseDate,
@@ -26,7 +29,8 @@ const MovieCard: FC<MovieCardProps> = ({
   rating,
   runtime,
   overview,
-  genres
+  genres,
+  onMovieSelect,
 }) => {
   const [isMenuOpened, handleMenuVisibility] = useState<boolean>(false)
   const [isDeleteMovieOpened, handleDeleteMovieVisibility] = useState<boolean>(false)
@@ -81,7 +85,10 @@ const MovieCard: FC<MovieCardProps> = ({
           </ul>
         </div>}
         <div className={styles['movieCard--img']}>
-          <img src={posterPath} />
+          <img
+            src={posterPath}
+            onClick={() => onMovieSelect(id)}
+          />
         </div>
 
         <div className={styles['movieCard--titleYear']}>
