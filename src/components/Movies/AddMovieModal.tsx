@@ -1,19 +1,13 @@
 import React, { FC } from 'react'
 
 import Modal from '../UI/Modal'
-import MovieForm from "./MovieForm"
-import {Movie} from "./MovieCard";
+import MovieForm from './MovieForm'
 
-interface AddMovieModalProps extends Movie{
+interface AddMovieModalProps {
   onClose: () => void
 }
 
 const AddMovieModal:FC<AddMovieModalProps> = ({
-  title,
-  rating,
-  runtime,
-  overview,
-  genres,
   onClose
 }) => {
   return (
