@@ -16,8 +16,8 @@ interface MovieFormProps extends Movie {
 const MovieForm: FC<MovieFormProps> = ({
   heading,
   title= '',
-  rating= null,
-  runtime= null,
+  rating= 0,
+  runtime= 0,
   releaseDate= '',
   overview= '',
   genres= [],

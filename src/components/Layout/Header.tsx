@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, {FC, memo} from 'react'
 
 import SearchBar from "../SearchBar/SearchBar"
 import Button from "../UI/Button"
@@ -23,4 +23,4 @@ const Header: FC<{ handleAddMovie: () => void }> = ({
   </div>
 }
 
-export default Header
+export default memo(Header)

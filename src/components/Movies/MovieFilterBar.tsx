@@ -49,7 +49,9 @@ const MovieFilterBar: FC<MovieFilterBarProps> = ({
         <div
           onClick={invertSortOrder}
           className={styles['movieFilterBar--sort-val']}
-        >Release Date</div>
+        >
+          {activeSort}
+        </div>
         <div
           className={classNames(
             styles['movieFilterBar--arrow'],

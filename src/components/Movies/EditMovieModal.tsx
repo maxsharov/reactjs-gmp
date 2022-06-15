@@ -9,13 +9,8 @@ interface EditMovieModalProps extends Movie{
 }
 
 const EditMovieModal:FC<EditMovieModalProps> = ({
-  title,
-  rating,
-  runtime,
-  overview,
-  releaseDate,
-  genres,
-  onClose
+  onClose,
+  ...movieProps
 }) => {
   return (
     <Modal
@@ -23,13 +18,8 @@ const EditMovieModal:FC<EditMovieModalProps> = ({
     >
       <MovieForm
         heading="Edit movie"
-        title={title}
-        rating={rating}
-        runtime={runtime}
-        overview={overview}
-        releaseDate={releaseDate}
-        genres={genres}
         onClose={onClose}
+        {...movieProps}
       />
     </Modal>
   )
