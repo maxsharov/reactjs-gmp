@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState} from "react"
+import React, {FC, useCallback, useEffect, useMemo, useState} from "react"
 
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Header from "./components/Layout/Header"
@@ -7,8 +7,9 @@ import MovieFilterBar from "./components/Movies/MovieFilterBar"
 import MoviesList from "./components/Movies/MoviesList"
 import MovieDescription from "./components/Movies/MovieDescription";
 
-import { MovieResponse } from "./interfaces";
+import {MovieResponse} from "./interfaces";
 import AddMovieModal from "./components/Movies/AddMovieModal";
+import useToggle from "./utils/useToggle";
 
 export type SortOrderType = 'asc' | 'desc'
 
@@ -137,102 +138,63 @@ const movies = {
 }
 
 const App: FC = () => {
-  const [isAddMovieOpened, handleAddMovieVisibility] = useState<boolean>(false)
+  const [isAddMovieOpened, handleAddMovieVisibility] = useToggle(false)
   const [sortOrder, setSortOrder] = useState<SortOrderType>('asc')
-  const [sortedMovies, setSortedMovies] = useState<MovieResponse[]>(() => movies.data.sort(
-      (a, b) =>
-        new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
-    )
-  )
-
+  const [sortedMovies, setSortedMovies] = useState<MovieResponse[]>(movies.data)
   const [movieSelected, setMovieSelected] = useState<number>(null)
+  const moviesTotal = sortedMovies.length
 
-  const showAddMovieModal = useCallback(
-    () => handleAddMovieVisibility(true),
-    []
-  )
-
-  const hideAddMovieModal = useCallback(
-    () => handleAddMovieVisibility(false),
-    []
-  )
-
-  const handleSortOrderChange = (sorting: SortOrderType) => {
+  const handleSortOrderChange = useCallback((sorting: SortOrderType) => {
     setSortOrder(sorting)
-  }
-
-  const onMovieSelect = (movieId: number) => {
-    setMovieSelected(movieId)
-  }
-
-  // const onMovieSelect = useCallback((movieId: number )=> {
-  //   setMovieSelected(movieId)
-  // }, [movieSelected])
-
-  // const onItemClick = useCallback(event => {
-  //   console.log('You clicked ', event.currentTarget);
-  // }, [term]);
-
-
-  useEffect(() => {
     setSortedMovies(sortedMovies => sortedMovies.reverse())
-  }, [sortOrder])
+  }, [])
 
-  console.log('movieSelected', movieSelected)
+  const selectedMovieResponse = sortedMovies.find(movie => movie.id === movieSelected)
 
-  // const selectedMovieDescription = useMemo(() => sortedMovies.find(movie => movie.id === movieSelected), [movieSelected])
+  const selectedMovieDescription = movieSelected ? {
+    id: selectedMovieResponse.id,
+    title: selectedMovieResponse.title,
+    genres: selectedMovieResponse.genres,
+    posterPath: selectedMovieResponse.poster_path,
+    releaseDate: selectedMovieResponse.release_date,
+    rating: selectedMovieResponse.vote_average,
+    runtime: selectedMovieResponse.runtime,
+    overview: selectedMovieResponse.overview,
+    year: selectedMovieResponse.release_date.substring(0, 4),
+  } : {}
 
-  const selectedMovieDescriptionResponse = sortedMovies.find(movie => movie.id === movieSelected)
+  const onMovieSelect = useCallback(
+    (movieId: number) => {
+      setMovieSelected(movieId)
+    },
+    []
+  )
 
-  useEffect(() => {
-    console.log('selectedMovieDescriptionResponse changed')
-  }, [selectedMovieDescriptionResponse])
-
-  let selectedMovieDescription = {}
-
-  if (movieSelected) {
-    const {
-      id,
-      title,
-      genres,
-      poster_path: posterPath,
-      release_date: releaseDate,
-      vote_average: rating,
-      runtime,
-      overview,
-    } = selectedMovieDescriptionResponse
-
-    const year = releaseDate.substring(0, 4)
-
-    selectedMovieDescription = {
-      id,
-      title,
-      genres,
-      posterPath,
-      releaseDate,
-      year,
-      rating,
-      runtime,
-      overview,
-    }
-  }
+  const hideMovieDescription = useCallback(
+    () => {
+      setMovieSelected(null)
+    },
+    []
+  )
 
   console.log('App render')
 
-  const hideMovieDescription = () => {
-    setMovieSelected(null)
-  }
+  useEffect(() => {
+    // I'm using array destructuring to trigger MoviesList rerender
+    setSortedMovies(prevStateMovies => [...prevStateMovies].sort(
+      (a, b) =>
+        new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+    ))
+  }, [])
 
   return (
     <ErrorBoundary>
-      {!movieSelected &&
-        <Header handleAddMovie={showAddMovieModal} />
-      }
-      {movieSelected &&
+      {movieSelected ?
         <MovieDescription
           {...selectedMovieDescription}
           onClose={hideMovieDescription}
-        />
+        /> :
+        <Header handleAddMovie={handleAddMovieVisibility}/>
       }
       <main>
         <MovieFilterBar
@@ -240,14 +202,14 @@ const App: FC = () => {
           onSortOrderChange={handleSortOrderChange}
         />
         <MoviesList
-          moviesTotal={movies.totalAmount}
+          moviesTotal={moviesTotal}
           movies={sortedMovies}
           onMovieSelect={onMovieSelect}
         />
       </main>
       <Footer/>
       {isAddMovieOpened &&
-        <AddMovieModal onClose={hideAddMovieModal}/>
+        <AddMovieModal onClose={handleAddMovieVisibility}/>
       }
     </ErrorBoundary>
   )
