@@ -41,34 +41,14 @@ const MovieForm: FC<MovieFormProps> = ({
     overview,
   })
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFormValueChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormValues(
-      prevState => ({ ...prevState, title: e.target.value })
-    )
-  }
-  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues(
-      prevState => ({ ...prevState, rating: Number(e.target.value) })
-    )
-  }
-  const handleRuntimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues(
-      prevState => ({ ...prevState, runtime: Number(e.target.value) })
+      prevState => ({ ...prevState, [e.target.name]: e.target.value })
     )
   }
   const handleSelectedGenres = (genres: string[]) => {
     setFormValues(
       prevState => ({ ...prevState, genres })
-    )
-  }
-  const handleReleaseDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues(
-      prevState => ({ ...prevState, releaseDate: e.target.value })
-    )
-  }
-  const handleOverviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormValues(
-      prevState => ({ ...prevState, overview: e.target.value })
     )
   }
 
@@ -81,11 +61,11 @@ const MovieForm: FC<MovieFormProps> = ({
         <div className={styles['form--row']}>
           <div className={styles['form--item']}>
             <label>Title</label>
-            <input type="text" value={formValues.title} onChange={handleTitleChange} />
+            <input type="text" value={formValues.title} onChange={handleFormValueChange} />
           </div>
           <div className={styles['form--item']}>
             <label>Release Date</label>
-            <input placeholder="Select Date" type="date" value={formValues.releaseDate} onChange={handleReleaseDateChange} pattern="\d{2}/\d{2}/\d{4}" />
+            <input placeholder="Select Date" type="date" value={formValues.releaseDate} onChange={handleFormValueChange} pattern="\d{2}/\d{2}/\d{4}" />
           </div>
         </div>
         <div className={styles['form--row']}>
@@ -95,7 +75,7 @@ const MovieForm: FC<MovieFormProps> = ({
           </div>
           <div className={styles['form--item']}>
             <label>Rating</label>
-            <input type="number" value={formValues.rating} onChange={handleRatingChange} />
+            <input type="number" value={formValues.rating} onChange={handleFormValueChange} />
           </div>
         </div>
         <div className={styles['form--row']}>
@@ -108,7 +88,7 @@ const MovieForm: FC<MovieFormProps> = ({
           </div>
           <div className={styles['form--item']}>
             <label>Runtime</label>
-            <input type="text" value={formValues.runtime} onChange={handleRuntimeChange} />
+            <input type="text" value={formValues.runtime} onChange={handleFormValueChange} />
           </div>
         </div>
         <div className={styles['form--row']}>
@@ -117,7 +97,7 @@ const MovieForm: FC<MovieFormProps> = ({
             <textarea
               defaultValue={overview}
               placeholder="Movie description"
-              onChange={handleOverviewChange}
+              onChange={handleFormValueChange}
             />
           </div>
         </div>
