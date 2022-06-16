@@ -13,6 +13,15 @@ interface MovieFormProps extends Movie {
   onClose: () => void
 }
 
+interface MovieFormValues {
+  title: string
+  rating: number
+  runtime: number
+  genres: string[]
+  releaseDate: string
+  overview: string
+}
+
 const MovieForm: FC<MovieFormProps> = ({
   heading,
   title= '',
@@ -23,26 +32,44 @@ const MovieForm: FC<MovieFormProps> = ({
   genres= [],
   onClose,
 }) => {
-  const [inputTitle, setInputTitle] = useState(title)
-  const [inputRating, setInputRating] = useState<number>(rating)
-  const [inputRuntime, setInputRuntime] = useState<number>(runtime)
-  const [inputGenres, setInputGenres] = useState<string[]>(genres)
-  const [inputReleaseDate, setInputReleaseDate] = useState<string>(releaseDate)
+  const [formValues, setFormValues] = useState<MovieFormValues>({
+    title,
+    rating,
+    runtime,
+    genres,
+    releaseDate,
+    overview,
+  })
 
-  const handleTitleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setInputTitle(e.target.value)
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues(
+      prevState => ({ ...prevState, title: e.target.value })
+    )
   }
-  const handleRatingChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setInputRating(Number(e.target.value))
+  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues(
+      prevState => ({ ...prevState, rating: Number(e.target.value) })
+    )
   }
-  const handleRuntimeChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setInputRuntime(Number(e.target.value))
+  const handleRuntimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues(
+      prevState => ({ ...prevState, runtime: Number(e.target.value) })
+    )
   }
   const handleSelectedGenres = (genres: string[]) => {
-    setInputGenres(genres)
+    setFormValues(
+      prevState => ({ ...prevState, genres })
+    )
   }
-  const handleReleaseDateChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setInputReleaseDate(e.target.value)
+  const handleReleaseDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues(
+      prevState => ({ ...prevState, releaseDate: e.target.value })
+    )
+  }
+  const handleOverviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormValues(
+      prevState => ({ ...prevState, overview: e.target.value })
+    )
   }
 
   return (
@@ -54,11 +81,11 @@ const MovieForm: FC<MovieFormProps> = ({
         <div className={styles['form--row']}>
           <div className={styles['form--item']}>
             <label>Title</label>
-            <input type="text" value={inputTitle} onChange={handleTitleChange} />
+            <input type="text" value={formValues.title} onChange={handleTitleChange} />
           </div>
           <div className={styles['form--item']}>
             <label>Release Date</label>
-            <input placeholder="Select Date" type="date" value={inputReleaseDate} onChange={handleReleaseDateChange} pattern="\d{2}/\d{2}/\d{4}" />
+            <input placeholder="Select Date" type="date" value={formValues.releaseDate} onChange={handleReleaseDateChange} pattern="\d{2}/\d{2}/\d{4}" />
           </div>
         </div>
         <div className={styles['form--row']}>
@@ -68,20 +95,20 @@ const MovieForm: FC<MovieFormProps> = ({
           </div>
           <div className={styles['form--item']}>
             <label>Rating</label>
-            <input type="number" value={inputRating} onChange={handleRatingChange} />
+            <input type="number" value={formValues.rating} onChange={handleRatingChange} />
           </div>
         </div>
         <div className={styles['form--row']}>
           <div className={styles['form--item']}>
             <label>Genre</label>
             <GenresSelect
-              selectedGenres={inputGenres}
+              selectedGenres={formValues.genres}
               onSelectedGenres={handleSelectedGenres}
             />
           </div>
           <div className={styles['form--item']}>
             <label>Runtime</label>
-            <input type="text" value={inputRuntime} onChange={handleRuntimeChange} />
+            <input type="text" value={formValues.runtime} onChange={handleRuntimeChange} />
           </div>
         </div>
         <div className={styles['form--row']}>
@@ -90,6 +117,7 @@ const MovieForm: FC<MovieFormProps> = ({
             <textarea
               defaultValue={overview}
               placeholder="Movie description"
+              onChange={handleOverviewChange}
             />
           </div>
         </div>
