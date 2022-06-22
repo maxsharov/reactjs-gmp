@@ -1,10 +1,15 @@
-import React, { FC } from "react"
+import React, { FC, useCallback, useEffect, useState } from "react"
 
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Header from "./components/Layout/Header"
 import Footer from "./components/Layout/Footer"
 import MovieFilterBar from "./components/Movies/MovieFilterBar"
 import MoviesList from "./components/Movies/MoviesList"
+
+import { MovieResponse } from "./interfaces";
+import AddMovieModal from "./components/Movies/AddMovieModal";
+
+export type SortOrderType = 'asc' | 'desc'
 
 const movies = {
   "totalAmount": 3000,
@@ -131,14 +136,50 @@ const movies = {
 }
 
 const App: FC = () => {
+  const [isAddMovieOpened, handleAddMovieVisibility] = useState<boolean>(false)
+  const [sortOrder, setSortOrder] = useState<SortOrderType>('asc')
+  const [sortedMovies, setSortedMovies] = useState<MovieResponse[]>(() => movies.data.sort(
+    (a, b) =>
+      new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+    )
+  )
+
+  const showAddMovieModal = useCallback(
+    () => handleAddMovieVisibility(true),
+    []
+  )
+
+  const hideAddMovieModal = useCallback(
+    () => handleAddMovieVisibility(false),
+    []
+  )
+
+  const handleSortOrderChange = useCallback(
+    (sorting: SortOrderType) => setSortOrder(sorting),
+    []
+  )
+
+  useEffect(() => {
+    setSortedMovies(sortedMovies => sortedMovies.reverse())
+  }, [sortOrder])
+
   return (
     <ErrorBoundary>
-      <Header/>
+      <Header handleAddMovie={showAddMovieModal} />
       <main>
-        <MovieFilterBar />
-        <MoviesList moviesTotal={movies.totalAmount} movies={movies.data}/>
+        <MovieFilterBar
+          sortOrder={sortOrder}
+          onSortOrderChange={handleSortOrderChange}
+        />
+        <MoviesList
+          moviesTotal={movies.totalAmount}
+          movies={sortedMovies}
+        />
       </main>
-      <Footer />
+      <Footer/>
+      {isAddMovieOpened &&
+        <AddMovieModal onClose={hideAddMovieModal}/>
+      }
     </ErrorBoundary>
   )
 }

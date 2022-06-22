@@ -9,10 +9,13 @@ const SearchBar = () => {
     <div className={styles["search-bar"]}>
       <h2>Find your movie</h2>
       <div className={styles["search-bar--content"]}>
-        <input type="text" />
+        <input
+          type="text"
+          className={styles["search"]}
+        />
         <Button
           primary
-          classes={styles["search-bar-btn"]}
+          classes={styles["search-button"]}
         >
           Search
         </Button>

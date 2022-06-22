@@ -1,29 +1,14 @@
 import React, { FC } from 'react'
-import { Movie } from "../../interfaces"
 import MovieCard from "./MovieCard"
+
+import { MovieResponse } from "../../interfaces"
 
 import styles from './MoviesList.scss'
 
 interface MoviesListProps {
-  movies: Movie[]
+  movies: MovieResponse[]
   moviesTotal: number
 }
-
-/*
-*   id: number
-  title: string
-  tagline: string
-  vote_average: number
-  vote_count: number
-  release_date: string
-  poster_path: string
-  overview: string
-  budget: number
-  revenue: number
-  genres: string[]
-  runtime: number
-*
-* */
 
 const MoviesList: FC<MoviesListProps> = ({
   movies,
@@ -42,15 +27,24 @@ const MoviesList: FC<MoviesListProps> = ({
               title,
               genres,
               poster_path: posterPath,
-              release_date: releaseDate
+              release_date: releaseDate,
+              vote_average: rating,
+              runtime,
+              overview,
             } = item
+
+            const year = releaseDate.substring(0, 4)
 
             const movieCardProps = {
               id,
               title,
               genres,
               posterPath,
-              releaseDate
+              releaseDate,
+              year,
+              rating,
+              runtime,
+              overview,
             }
 
             return <MovieCard key={id} {...movieCardProps} />

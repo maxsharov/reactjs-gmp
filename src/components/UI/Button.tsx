@@ -5,9 +5,10 @@ import styles from './Button.scss'
 
 interface ButtonProps {
   classes?: string
-  children: any
+  children: React.ReactNode
   primary?: boolean
   outlined?: boolean
+  onClick?: () => void
 }
 
 const Button: FC<ButtonProps> = ({
@@ -15,8 +16,10 @@ const Button: FC<ButtonProps> = ({
   children,
   primary = false,
   outlined = false,
+  onClick
 }) => {
   return <button
+    onClick={onClick}
     className={classNames(
       styles.button,
       {

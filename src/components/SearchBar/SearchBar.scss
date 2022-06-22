@@ -11,12 +11,13 @@
   &--content {
     display: flex;
 
-    input {
+    .search {
       margin-right: 14px;
       width: 100%;
+      height: 57px;
     }
 
-    .search-bar-btn {
+    .search-button {
       width: 233px;
     }
   }
