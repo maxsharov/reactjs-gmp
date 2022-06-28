@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react'
+import React, {FC, useCallback, useState} from 'react'
 
 import DeleteMovieModal from "./DeleteMovieModal";
 import EditMovieModal from "./EditMovieModal";
 
 import styles from './MovieCard.scss'
+import useToggle from "../../utils/useToggle";
 
 export interface Movie {
   id?: number
@@ -32,21 +33,22 @@ const MovieCard: FC<MovieCardProps> = ({
   genres,
   onMovieSelect,
 }) => {
-  const [isMenuOpened, handleMenuVisibility] = useState<boolean>(false)
+  const [isMenuVisible, handleMenuVisibility] = useToggle(false)
   const [isDeleteMovieOpened, handleDeleteMovieVisibility] = useState<boolean>(false)
   const [isEditMovieOpened, handleEditMovieVisibility] = useState<boolean>(false)
 
-  const showMenu = () => handleMenuVisibility(true)
-  const hideMenu = () => handleMenuVisibility(false)
-
-  const showDeleteMovieModal = () => {
-    handleMenuVisibility(false)
-    handleDeleteMovieVisibility(true)
-  }
+  const showDeleteMovieModal = useCallback(
+    () => {
+      console.log('handleMenuVisibility')
+      handleMenuVisibility()
+      handleDeleteMovieVisibility(true)
+    },
+    []
+  )
   const hideDeleteMovieModal = () => handleDeleteMovieVisibility(false)
 
   const showEditMovieModal = () => {
-    handleMenuVisibility(false)
+    handleMenuVisibility()
     handleEditMovieVisibility(true)
   }
   const hideEditMovieModal = () => handleEditMovieVisibility(false)
@@ -68,14 +70,14 @@ const MovieCard: FC<MovieCardProps> = ({
       <div className={styles['movieCard--content']}>
         <div
           className={styles['menu-link']}
-          onClick={showMenu}
+          onClick={handleMenuVisibility}
         ></div>
-        {isMenuOpened && <div
+        {isMenuVisible && <div
           className={styles['movieCardMenu']}
         >
           <div
             className={styles['movieCardMenu--close']}
-            onClick={hideMenu}
+            onClick={handleMenuVisibility}
           >
             X
           </div>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 
 import styles from './MovieDescription.scss'
 import { Movie } from "./MovieCard";
@@ -8,7 +8,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 interface MovieDescriptionProps extends Movie {
   onClose: () => void
 }
-
 
 const MovieDescription: FC<MovieDescriptionProps> = ({
   id,
@@ -21,13 +20,22 @@ const MovieDescription: FC<MovieDescriptionProps> = ({
   genres,
   onClose,
 }) => {
-  console.log('MovieDescription render')
-
-  const movieTimeHours = Math.floor(runtime / 60)
-  const movieTimeMinutes = runtime % 60
-  const movieTime = `${movieTimeHours}h ${movieTimeMinutes}min`
-
-  const genre = genres.join(', ')
+  const movieTimeHours = useMemo(
+    () => Math.floor(runtime / 60),
+    [runtime]
+  )
+  const movieTimeMinutes = useMemo(
+    () => runtime % 60,
+    [runtime]
+  )
+  const movieTime = useMemo(
+    () => `${movieTimeHours}h ${movieTimeMinutes}min`,
+    [movieTimeHours, movieTimeMinutes]
+  )
+  const genre = useMemo(
+    () => genres.join(', '),
+    [genres]
+  )
 
   return (
     <>

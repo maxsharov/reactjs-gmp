@@ -4,7 +4,7 @@ const useToggle = (initialValue = false): [boolean, () => void] => {
   const [flag, setFlag] = useState(initialValue);
 
   const toggle = useCallback(() => {
-      setFlag(!flag)
+      setFlag(flag => !flag)
     },
     [flag]
   )
