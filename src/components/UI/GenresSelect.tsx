@@ -1,6 +1,7 @@
-import React, {ChangeEvent, FC, useState} from 'react'
+import React, { ChangeEvent, FC } from 'react'
 import classNames from "classnames";
 
+import useToggle from "../../utils/useToggle";
 import { allGenresList } from "../../constants";
 
 import styles from "./GenresSelect.scss";
@@ -14,11 +15,7 @@ const GenresSelect: FC<GenresSelectProps> = ({
   selectedGenres,
   onSelectedGenres,
 }) => {
-  const [isOpen, handleVisibility] = useState(false)
-
-  const toggleVisibility = () => {
-    handleVisibility((state) => !state)
-  }
+  const [isListVisible, handleListVisibility] = useToggle(false)
 
   const handleGenreSelect = (e: ChangeEvent<HTMLInputElement>) => {
     let newSelectedGenres = []
@@ -36,7 +33,7 @@ const GenresSelect: FC<GenresSelectProps> = ({
       className={classNames(
         styles['input-toggle'],
         {
-          [styles['input-toggle--opened']]: isOpen
+          [styles['input-toggle--opened']]: isListVisible
         }
       )}
     >
@@ -44,11 +41,11 @@ const GenresSelect: FC<GenresSelectProps> = ({
         readOnly
         type="text"
         value="Select Genre"
-        onClick={toggleVisibility}
+        onClick={handleListVisibility}
         className={styles['input-toggle--input']}
       />
 
-      {isOpen && <div className={styles['checkbox-group']}>
+      {isListVisible && <div className={styles['checkbox-group']}>
         {allGenresList.map(genre => {
           const genreLowerCase = genre.toLowerCase()
 

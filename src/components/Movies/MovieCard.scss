@@ -21,7 +21,6 @@
       border-radius: 50%;
       cursor: pointer;
 
-
       &:after {
         position: absolute;
         content: '\22ee';
@@ -74,6 +73,7 @@
 
   &--img {
     margin-bottom: 20px;
+    cursor: pointer;
 
     img {
       width: 320px;
