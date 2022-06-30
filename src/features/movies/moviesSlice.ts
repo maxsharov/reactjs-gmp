@@ -1,19 +1,53 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { GenreType, SortType } from '../../components/Movies/MovieFilterBar'
 
-export const movieSlice = createSlice({
+export type SortOrderType = 'asc' | 'desc'
+
+export interface MoviesSliceState {
+  selectedMovie: number
+  sortBy: string
+  sortByTitle: string
+  genreSelected: string
+  genreSelectedTitle: string
+  sortOrder: SortOrderType
+}
+
+const initialState: MoviesSliceState = {
+  selectedMovie: null,
+  sortBy: 'release_date',
+  sortByTitle: 'Release Date',
+  genreSelected: 'all',
+  genreSelectedTitle: 'All',
+  sortOrder: 'desc',
+}
+
+export const moviesSlice = createSlice({
   name: 'counter',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
+    changeSortOrder(state) {
+      state.selectedMovie = null
+      state.sortOrder = state.sortOrder === 'asc' ? 'desc' : 'asc'
     },
-    decrement: (state) => {
-      state.value -= 1
+    setSortBy(state, action: PayloadAction<SortType>){
+      state.selectedMovie = null
+      state.sortBy = action.payload.id
+      state.sortByTitle = action.payload.title
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+    setGenre(state, action: PayloadAction<GenreType>) {
+      state.selectedMovie = null
+      state.genreSelected = action.payload.id
+      state.genreSelectedTitle = action.payload.title
     },
+    setSelectedMovie(state, action: PayloadAction<number>) {
+      state.selectedMovie = action.payload
+    },
+    removeSelectedMovie(state) {
+      state.selectedMovie = null
+    }
   },
 })
+
+export const { changeSortOrder, setSortBy, setGenre, setSelectedMovie, removeSelectedMovie } = moviesSlice.actions
+
+export default moviesSlice.reducer

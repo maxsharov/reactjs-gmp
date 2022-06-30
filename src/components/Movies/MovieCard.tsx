@@ -1,7 +1,7 @@
 import React, {FC, useCallback, useState} from 'react'
 
-import DeleteMovieModal from "./DeleteMovieModal";
-import EditMovieModal from "./EditMovieModal";
+import DeleteMovieModal from './DeleteMovieModal'
+import EditMovieModal from './EditMovieModal'
 
 import styles from './MovieCard.scss'
 import useToggle from "../../utils/useToggle";

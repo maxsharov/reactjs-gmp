@@ -1,25 +1,46 @@
 import React, { FC, useMemo } from 'react'
 
 import styles from './MovieDescription.scss'
-import { Movie } from "./MovieCard";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useGetMoviesQuery } from '../../app/moviesApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../app/store'
+import { removeSelectedMovie } from '../../features/movies/moviesSlice'
 
-interface MovieDescriptionProps extends Movie {
-  onClose: () => void
-}
+const MovieDescription: FC = () => {
+  const dispatch = useDispatch()
+  const sortOrder = useSelector((state: RootState) => state.movies.sortOrder)
+  const sortBy = useSelector((state: RootState) => state.movies.sortBy)
+  const genreSelected = useSelector((state: RootState) => state.movies.genreSelected)
+  const selectedMovie = useSelector((state: RootState) => state.movies.selectedMovie)
 
-const MovieDescription: FC<MovieDescriptionProps> = ({
-  id,
-  title,
-  posterPath,
-  rating,
-  year,
-  overview,
-  runtime,
-  genres,
-  onClose,
-}) => {
+  const {
+    movie
+  } = useGetMoviesQuery({
+    sortOrder,
+    sortBy,
+    genreSelected: genreSelected !== 'all' ? genreSelected : null
+  }, {
+    refetchOnMountOrArgChange: true,
+    selectFromResult: ({ data }) => ({
+      movie: data?.find((movie) => movie.id === selectedMovie)
+    }),
+  })
+
+  const {
+    id,
+    title,
+    poster_path: posterPath,
+    vote_average: rating,
+    release_date,
+    overview,
+    runtime,
+    genres,
+  } = movie
+
+  const year = release_date.substring(0, 4)
+
   const movieTimeHours = useMemo(
     () => Math.floor(runtime / 60),
     [runtime]
@@ -37,6 +58,13 @@ const MovieDescription: FC<MovieDescriptionProps> = ({
     [genres]
   )
 
+  const hideMovieDescription = useCallback(
+    () => {
+      dispatch(removeSelectedMovie())
+    },
+    []
+  )
+
   return (
     <>
       <div className={styles['heading-nav']}>
@@ -45,7 +73,7 @@ const MovieDescription: FC<MovieDescriptionProps> = ({
         </div>
         <div
           className={styles['heading-nav--search-link']}
-          onClick={onClose}
+          onClick={hideMovieDescription}
         >
           <FontAwesomeIcon icon={faSearch} />
         </div>

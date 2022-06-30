@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 
 import Modal from '../UI/Modal'
-import MovieForm from "./MovieForm"
-import {Movie} from "./MovieCard";
+import MovieForm from './MovieForm'
+import { Movie } from './MovieCard'
 
-interface EditMovieModalProps extends Movie{
+interface EditMovieModalProps extends Movie {
   onClose: () => void
 }
 

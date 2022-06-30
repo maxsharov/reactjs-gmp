@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, { FC, useState } from 'react'
 
 import Modal from '../UI/Modal'
 import Button from '../UI/Button'
