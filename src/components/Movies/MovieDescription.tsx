@@ -39,8 +39,10 @@ const MovieDescription: FC = () => {
     genres,
   } = movie
 
-  const year = release_date.substring(0, 4)
-
+  const year = useMemo(
+    () => release_date.substring(0, 4),
+    [release_date]
+  )
   const movieTimeHours = useMemo(
     () => Math.floor(runtime / 60),
     [runtime]
