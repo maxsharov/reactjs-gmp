@@ -58,9 +58,8 @@ const genres: GenreType[] = [
 const MovieFilterBar: FC = () => {
   const dispatch = useDispatch()
   const [areSortOrdersVisible, toggleSortOrderVisibility] = useToggle(false)
-  const sortOrder = useSelector((state: RootState) => state.movies.sortOrder)
-  const sortByTitle = useSelector((state: RootState) => state.movies.sortByTitle)
-  const genreSelected = useSelector((state: RootState) => state.movies.genreSelected)
+
+  const { sortOrder, sortByTitle, genreSelected } = useSelector((state: RootState) => state.movies)
 
   const invertSortOrder = () => {
     dispatch(changeSortOrder())

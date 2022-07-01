@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, useMemo, useCallback } from 'react'
 
 import styles from './MovieDescription.scss'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -10,10 +10,8 @@ import { removeSelectedMovie } from '../../features/movies/moviesSlice'
 
 const MovieDescription: FC = () => {
   const dispatch = useDispatch()
-  const sortOrder = useSelector((state: RootState) => state.movies.sortOrder)
-  const sortBy = useSelector((state: RootState) => state.movies.sortBy)
-  const genreSelected = useSelector((state: RootState) => state.movies.genreSelected)
-  const selectedMovie = useSelector((state: RootState) => state.movies.selectedMovie)
+
+  const { sortOrder, sortBy, selectedMovie, genreSelected } = useSelector((state: RootState) => state.movies)
 
   const {
     movie

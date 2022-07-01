@@ -11,9 +11,7 @@ import styles from './MoviesList.scss'
 const MoviesList: FC = () => {
   const dispatch = useDispatch()
 
-  const sortOrder = useSelector((state: RootState) => state.movies.sortOrder)
-  const sortBy = useSelector((state: RootState) => state.movies.sortBy)
-  const genreSelected = useSelector((state: RootState) => state.movies.genreSelected)
+  const { sortOrder, sortBy, genreSelected } = useSelector((state: RootState) => state.movies)
 
   const {
     data: movies = [],
