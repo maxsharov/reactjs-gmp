@@ -1,29 +1,46 @@
 import React, { FC } from 'react'
-import MovieCard from "./MovieCard"
+import { useDispatch, useSelector } from 'react-redux'
 
-import { MovieResponse } from "../../interfaces"
+import MovieCard from './MovieCard'
+import { useGetMoviesQuery } from '../../app/moviesApi'
+import { RootState } from '../../app/store'
+import { setSelectedMovie } from '../../features/movies/moviesSlice'
 
 import styles from './MoviesList.scss'
 
-interface MoviesListProps {
-  movies: MovieResponse[]
-  moviesTotal: number
-  onMovieSelect: (id: number) => void
-}
+const MoviesList: FC = () => {
+  const dispatch = useDispatch()
 
-const MoviesList: FC<MoviesListProps> = ({
-  movies,
-  moviesTotal,
-  onMovieSelect,
-}) => {
+  const { sortOrder, sortBy, genreSelected } = useSelector((state: RootState) => state.movies)
+
+  const {
+    data: movies = [],
+    isFetching,
+    isLoading,
+  } = useGetMoviesQuery({
+    sortOrder,
+    sortBy,
+    genreSelected: genreSelected !== 'all' ? genreSelected : null
+  }, {
+    refetchOnMountOrArgChange: true
+  })
+
+  const moviesTotal = movies.length || 0
+
+  const onMovieSelect = (movieId: number) => {
+    dispatch(setSelectedMovie(movieId))
+  }
+
+  if (isLoading) return <div>is loading</div>
+  if (isFetching) return <div>is fetching</div>
+
   return (
     <div>
       <div className={styles['movies--total']}>
         <span className={styles['movies--total-value']}>{moviesTotal}</span> movies found
       </div>
       <div className={styles['movies--list']}>
-        {movies.length > 0 &&
-          movies.map(item => {
+        {movies.map(item => {
             const {
               id,
               title,
@@ -49,7 +66,13 @@ const MoviesList: FC<MoviesListProps> = ({
               overview,
             }
 
-            return <MovieCard key={id} onMovieSelect={onMovieSelect} {...movieCardProps} />
+            return (
+              <MovieCard
+                key={id}
+                onMovieSelect={() => onMovieSelect(id)}
+                {...movieCardProps}
+              />
+            )
           })}
       </div>
     </div>

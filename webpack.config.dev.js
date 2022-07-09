@@ -8,7 +8,6 @@ module.exports = {
     path: path.join(__dirname, 'dev'),
     clean: true
   },
-  watch: true,
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
   },

@@ -3,6 +3,7 @@
   justify-content: space-between;
   margin-bottom: 20px;
   padding-top: 20px;
+  position: relative;
 
   border-image: linear-gradient(to top, #080707 1px, transparent 1px, #424242 2px) 4;
   border-bottom: 4px solid;
@@ -37,6 +38,29 @@
     &-val {
       font-weight: 500;
       cursor: pointer;
+    }
+  }
+
+  &--sort-types {
+    background-color: var(--black-color);
+    border: 1px solid rgb(195 195 195);
+    position: absolute;
+    top: 45px;
+    right: 26px;
+
+    border-radius: 4px;
+    width: 190px;
+
+    li {
+      height: 28px;
+      padding-left: 23px;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--main-color);
+      }
     }
   }
 

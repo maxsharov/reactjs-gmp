@@ -1,30 +1,77 @@
-import React, { FC, MouseEventHandler } from 'react'
-import classNames from "classnames"
+import React, { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeSortOrder, setGenre, setSortBy } from '../../features/movies/moviesSlice'
+import { RootState } from '../../app/store'
+import classNames from 'classnames'
 
 import styles from './MovieFilterBar.scss'
+import useToggle from '../../utils/useToggle'
 
-import {SortOrderType} from "../../App";
-
-const genres = ['All','Documentary','Comedy','Horror','Crime']
-
-interface MovieFilterBarProps {
-  sortOrder: SortOrderType
-  onSortOrderChange: (k: SortOrderType) => void
+export interface GenreType {
+  id: string
+  title: string
 }
 
-const MovieFilterBar: FC<MovieFilterBarProps> = ({
-  sortOrder,
-  onSortOrderChange
-}) => {
-  const activeGenre = 'All'
-  const activeSort = 'Release Date'
+export interface SortType {
+  id: string
+  title: string
+}
+
+const sortTypes: SortType[] = [
+  {
+    id: 'release_date',
+    title: 'Release Date'
+  },
+  {
+    id: 'genre',
+    title: 'Genre'
+  },
+  {
+    id: 'rating',
+    title: 'Rating'
+  },
+]
+
+const genres: GenreType[] = [
+  {
+    id: 'all',
+    title: 'All'
+  },
+  {
+    id: 'documentary',
+    title: 'Documentary'
+  },
+  {
+    id: 'comedy',
+    title: 'Comedy'
+  },
+  {
+    id: 'drama',
+    title: 'Drama'
+  },
+  {
+    id: 'romance',
+    title: 'Romance'
+  },
+]
+
+const MovieFilterBar: FC = () => {
+  const dispatch = useDispatch()
+  const [areSortOrdersVisible, toggleSortOrderVisibility] = useToggle(false)
+
+  const { sortOrder, sortByTitle, genreSelected } = useSelector((state: RootState) => state.movies)
 
   const invertSortOrder = () => {
-    if (sortOrder === 'asc') {
-      onSortOrderChange('desc')
-    } else {
-      onSortOrderChange('asc')
-    }
+    dispatch(changeSortOrder())
+  }
+
+  const changeGenreType = (genre: GenreType) => {
+    dispatch(setGenre(genre))
+  }
+
+  const changeSortType = (sortType: SortType) => {
+    dispatch(setSortBy(sortType))
+    toggleSortOrderVisibility()
   }
 
   return (
@@ -32,27 +79,41 @@ const MovieFilterBar: FC<MovieFilterBarProps> = ({
       <ul className={styles['movieFilterBar--genres']}>
         {genres.map(genre => {
           return (<li
+            onClick={() => changeGenreType(genre)}
             className={classNames(
               styles['movieFilterBar--genre'],
               {
-                [styles['movieFilterBar--genre-active']]: activeGenre === genre
+                [styles['movieFilterBar--genre-active']]: genreSelected === genre.id
               }
             )}
-            key={genre}
+            key={genre.id}
           >
-            {genre}
+            {genre.title}
           </li>)
         })}
       </ul>
       <div className={styles['movieFilterBar--sort']}>
         <div className={styles['movieFilterBar--sort-title']}>Sort by</div>
         <div
-          onClick={invertSortOrder}
+          onClick={toggleSortOrderVisibility}
           className={styles['movieFilterBar--sort-val']}
         >
-          {activeSort}
+          {sortByTitle}
         </div>
+        {areSortOrdersVisible && <ul className={styles['movieFilterBar--sort-types']}>
+          {sortTypes.map(sortType => {
+            return (
+              <li
+                key={sortType.id}
+                onClick={() => changeSortType(sortType)}
+              >
+                {sortType.title}
+              </li>
+            )
+          })}
+        </ul>}
         <div
+          onClick={invertSortOrder}
           className={classNames(
             styles['movieFilterBar--arrow'],
             {
