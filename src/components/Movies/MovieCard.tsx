@@ -1,18 +1,19 @@
-import React, {FC, useCallback, useState} from 'react'
+import React, { FC, useCallback, useState } from 'react'
 
 import DeleteMovieModal from './DeleteMovieModal'
 import EditMovieModal from './EditMovieModal'
 
 import styles from './MovieCard.scss'
-import useToggle from "../../utils/useToggle";
+import useToggle from '../../utils/useToggle'
 
 export interface Movie {
   id?: number
   title?: string
   posterPath?: string
-  releaseDate?: string
+  poster_path?: string
+  release_date?: string
   year?: string
-  rating?: number
+  vote_average?: number
   runtime?: number
   overview?: string
   genres?: string[]
@@ -25,9 +26,10 @@ const MovieCard: FC<MovieCardProps> = ({
   id,
   title,
   posterPath,
-  releaseDate,
+  poster_path,
+  release_date,
   year,
-  rating,
+  vote_average,
   runtime,
   overview,
   genres,
@@ -39,7 +41,6 @@ const MovieCard: FC<MovieCardProps> = ({
 
   const showDeleteMovieModal = useCallback(
     () => {
-      console.log('handleMenuVisibility')
       handleMenuVisibility()
       handleDeleteMovieVisibility(true)
     },
@@ -55,13 +56,17 @@ const MovieCard: FC<MovieCardProps> = ({
 
   return (
     <div className={styles['movieCard']}>
-      {isDeleteMovieOpened && <DeleteMovieModal onClose={hideDeleteMovieModal} />}
+      {isDeleteMovieOpened &&
+        <DeleteMovieModal id={id} onClose={hideDeleteMovieModal} />
+      }
       {isEditMovieOpened &&
         <EditMovieModal
+          id={id}
           title={title}
-          rating={rating}
+          vote_average={vote_average}
           overview={overview}
-          releaseDate={releaseDate}
+          release_date={release_date}
+          poster_path={poster_path}
           runtime={runtime}
           genres={genres}
           onClose={hideEditMovieModal}
@@ -88,7 +93,7 @@ const MovieCard: FC<MovieCardProps> = ({
         </div>}
         <div className={styles['movieCard--img']}>
           <img
-            src={posterPath}
+            src={poster_path}
             onClick={() => onMovieSelect(id)}
           />
         </div>

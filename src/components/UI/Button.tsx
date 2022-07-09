@@ -8,7 +8,9 @@ interface ButtonProps {
   children: React.ReactNode
   primary?: boolean
   outlined?: boolean
-  onClick?: () => void
+  submit?: boolean
+  reset?: boolean
+  onClick?: ({}) => void
 }
 
 const Button: FC<ButtonProps> = ({
@@ -16,19 +18,36 @@ const Button: FC<ButtonProps> = ({
   children,
   primary = false,
   outlined = false,
-  onClick
+  onClick,
+  submit,
+  reset,
 }) => {
-  return <button
-    onClick={onClick}
-    className={classNames(
-      styles.button,
-      {
-        [styles['button--primary']]: primary,
-        [styles['button--outline']]: outlined,
-      },
-      classes
-    )}
-  >{children}</button>
+  const btnProps: React.ComponentProps<'button'> = {}
+
+  if (submit) {
+    btnProps.type = 'submit'
+  } else if(reset) {
+    btnProps.type = 'reset'
+  } else {
+    btnProps.type = 'reset'
+  }
+
+  return (
+    <button
+      {...btnProps}
+      onClick={onClick}
+      className={classNames(
+        styles.button,
+        {
+          [styles['button--primary']]: primary,
+          [styles['button--outline']]: outlined,
+        },
+        classes
+      )}
+    >
+      {children}
+    </button>
+  )
 }
 
 export default Button
