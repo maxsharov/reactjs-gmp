@@ -4,14 +4,19 @@ import Modal from '../UI/Modal'
 import Button from '../UI/Button'
 
 import styles from './DeleteMovieModal.scss'
+import { useDeleteMovieMutation } from '../../app/moviesApi'
 
 interface DeleteMovieModalProps {
+  id: number
   onClose: () => void
 }
 
 const DeleteMovieModal: FC<DeleteMovieModalProps> = ({
+  id,
   onClose
 }) => {
+  const [deleteMovie] = useDeleteMovieMutation()
+
   return (
     <Modal
       heading="Delete Movie"
@@ -22,6 +27,7 @@ const DeleteMovieModal: FC<DeleteMovieModalProps> = ({
         <Button
           classes={styles['delete-form--buttons']}
           primary
+          onClick={() => deleteMovie(id)}
         >
           Confirm
         </Button>

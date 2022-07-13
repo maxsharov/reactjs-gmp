@@ -19,8 +19,32 @@ export const moviesApi = createApi({
         return `movies?sortBy=${sortBy}&sortOrder=${sortOrder}&search=${genreSelected}&searchBy=genres`
       },
       transformResponse: (response: { data: MovieResponse[] }) => response.data,
-    })
+    }),
+    updateMovie: build.mutation<MovieResponse, Partial<MovieResponse> & Pick<MovieResponse, 'id'>>({
+      query: ({...body}) => ({
+        url: `movies`,
+        method: 'PUT',
+        body
+      })
+    }),
+    addMovie: build.mutation<MovieResponse, Partial<MovieResponse>>({
+      query(body) {
+        return {
+          url: `movies`,
+          method: 'POST',
+          body,
+        }
+      }
+    }),
+    deleteMovie: build.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `movies/${id}`,
+          method: 'DELETE',
+        }
+      },
+    }),
   })
 })
 
-export const { useGetMoviesQuery } = moviesApi
+export const { useGetMoviesQuery, useUpdateMovieMutation, useAddMovieMutation, useDeleteMovieMutation } = moviesApi

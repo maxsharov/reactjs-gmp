@@ -29,6 +29,7 @@ input:focus{
 }
 
 textarea,
+input,
 input[type="text"],
 input[type="number"],
 input[type="date"] {

@@ -45,23 +45,23 @@ const MoviesList: FC = () => {
               id,
               title,
               genres,
-              poster_path: posterPath,
-              release_date: releaseDate,
-              vote_average: rating,
+              poster_path,
+              release_date,
+              vote_average,
               runtime,
               overview,
             } = item
 
-            const year = releaseDate.substring(0, 4)
+            const year = release_date.substring(0, 4)
 
             const movieCardProps = {
               id,
               title,
               genres,
-              posterPath,
-              releaseDate,
+              poster_path,
+              release_date,
               year,
-              rating,
+              vote_average,
               runtime,
               overview,
             }

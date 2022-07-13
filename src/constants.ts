@@ -1,1 +1,1 @@
-export const allGenresList = ['Documentary','Comedy','Horror','Crime','Action']
+export const allGenresList = ['Adventure','Comedy','Horror','Crime','Action','Science Fiction']
