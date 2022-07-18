@@ -6,7 +6,8 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'dev'),
-    clean: true
+    clean: true,
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
@@ -16,7 +17,8 @@ module.exports = {
     hot: true,
     port: 9000,
     open: true,
-    compress: true
+    compress: true,
+    historyApiFallback: true,
   },
   optimization: {
     splitChunks: {

@@ -1,11 +1,13 @@
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeSortOrder, setGenre, setSortBy } from '../../features/movies/moviesSlice'
-import { RootState } from '../../app/store'
+import { useSearchParams } from "react-router-dom";
 import classNames from 'classnames'
 
-import styles from './MovieFilterBar.scss'
+import { changeSortOrder, setGenre, setSortBy } from '../../features/movies/moviesSlice'
+import { RootState } from '../../app/store'
 import useToggle from '../../utils/useToggle'
+
+import styles from './MovieFilterBar.scss'
 
 export interface GenreType {
   id: string
@@ -17,22 +19,30 @@ export interface SortType {
   title: string
 }
 
-const sortTypes: SortType[] = [
+export const sortTypes: SortType[] = [
   {
     id: 'release_date',
     title: 'Release Date'
   },
   {
-    id: 'genre',
-    title: 'Genre'
+    id: 'revenue',
+    title: 'Revenue'
   },
   {
-    id: 'rating',
+    id: 'budget',
+    title: 'Budget'
+  },
+  {
+    id: 'vote_average',
     title: 'Rating'
+  },
+  {
+    id: 'title',
+    title: 'Title'
   },
 ]
 
-const genres: GenreType[] = [
+export const genresList: GenreType[] = [
   {
     id: 'all',
     title: 'All'
@@ -53,11 +63,16 @@ const genres: GenreType[] = [
     id: 'romance',
     title: 'Romance'
   },
+  {
+    id: 'thriller',
+    title: 'Thriller'
+  },
 ]
 
 const MovieFilterBar: FC = () => {
   const dispatch = useDispatch()
   const [areSortOrdersVisible, toggleSortOrderVisibility] = useToggle(false)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const { sortOrder, sortByTitle, genreSelected } = useSelector((state: RootState) => state.movies)
 
@@ -66,10 +81,14 @@ const MovieFilterBar: FC = () => {
   }
 
   const changeGenreType = (genre: GenreType) => {
+    searchParams.set('genre', genre.id)
+    setSearchParams(searchParams)
     dispatch(setGenre(genre))
   }
 
   const changeSortType = (sortType: SortType) => {
+    searchParams.set('sortBy', sortType.id)
+    setSearchParams(searchParams)
     dispatch(setSortBy(sortType))
     toggleSortOrderVisibility()
   }
@@ -77,7 +96,7 @@ const MovieFilterBar: FC = () => {
   return (
     <div className={styles['movieFilterBar']}>
       <ul className={styles['movieFilterBar--genres']}>
-        {genres.map(genre => {
+        {genresList.map(genre => {
           return (<li
             onClick={() => changeGenreType(genre)}
             className={classNames(
