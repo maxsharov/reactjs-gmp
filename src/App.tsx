@@ -1,37 +1,23 @@
 import React, { FC } from 'react'
-import { useSelector } from 'react-redux'
 
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
-import Header from './components/Layout/Header'
-import Footer from './components/Layout/Footer'
-import MovieFilterBar from './components/Movies/MovieFilterBar'
-import MoviesList from './components/Movies/MoviesList'
-import MovieDescription from './components/Movies/MovieDescription'
-
-import AddMovieModal from './components/Movies/AddMovieModal'
-import useToggle from './utils/useToggle'
-import { RootState } from './app/store'
+import Layout from './components/Layout/Layout'
+import {Navigate, Route, Routes} from "react-router-dom";
+import MoviesList from "./components/Movies/MoviesList";
+import Error from './components/Layout/Error'
 
 const App: FC = () => {
-  const [isAddMovieOpened, handleAddMovieVisibility] = useToggle(false)
-
-  const selectedMovie = useSelector((state: RootState) => state.movies.selectedMovie)
-
   return (
-    <ErrorBoundary>
-      {selectedMovie ?
-        <MovieDescription /> :
-        <Header handleAddMovie={handleAddMovieVisibility}/>
-      }
-      <main>
-        <MovieFilterBar />
-        <MoviesList />
-      </main>
-      <Footer/>
-      {isAddMovieOpened &&
-        <AddMovieModal onClose={handleAddMovieVisibility}/>
-      }
-    </ErrorBoundary>
+    <Routes>
+      <Route path="/search" element={<Layout />}>
+        <Route path=":searchQuery" element={<MoviesList />} />
+      </Route>
+      <Route
+        path="/"
+        element={<Navigate to="/search" replace />}
+      />
+      <Route path="*" element={<Error />}
+      />
+    </Routes>
   )
 }
 

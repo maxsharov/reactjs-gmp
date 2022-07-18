@@ -5,6 +5,9 @@ type GetMoviesArgs = {
   sortBy: string
   sortOrder: 'asc' | 'desc'
   genreSelected?: string
+  search?: string
+  searchBy?: string
+  filter?: string
 }
 
 export const moviesApi = createApi({
@@ -12,13 +15,23 @@ export const moviesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/'}),
   endpoints: (build) => ({
     getMovies: build.query<MovieResponse[], GetMoviesArgs>({
-      query: ({sortBy, sortOrder, genreSelected}) => {
-        if (!genreSelected) {
-          return `movies?sortBy=${sortBy}&sortOrder=${sortOrder}`
+      query: ({sortBy, sortOrder, genreSelected, search, searchBy, filter}) => {
+        let url = `movies?sortBy=${sortBy}&sortOrder=${sortOrder}`
+        if (genreSelected) {
+          url += `&search=${genreSelected}&searchBy=genres`
         }
-        return `movies?sortBy=${sortBy}&sortOrder=${sortOrder}&search=${genreSelected}&searchBy=genres`
+        if (search) {
+          url += `&search=${search}&searchBy=${searchBy}`
+        }
+        if (filter) {
+          url += `&filter=${filter}`
+        }
+        return url
       },
       transformResponse: (response: { data: MovieResponse[] }) => response.data,
+    }),
+    getMovie: build.query<MovieResponse, number>({
+      query: (id) => ({ url: `movies/${id}` }),
     }),
     updateMovie: build.mutation<MovieResponse, Partial<MovieResponse> & Pick<MovieResponse, 'id'>>({
       query: ({...body}) => ({
@@ -47,4 +60,10 @@ export const moviesApi = createApi({
   })
 })
 
-export const { useGetMoviesQuery, useUpdateMovieMutation, useAddMovieMutation, useDeleteMovieMutation } = moviesApi
+export const {
+  useGetMoviesQuery,
+  useGetMovieQuery,
+  useUpdateMovieMutation,
+  useAddMovieMutation,
+  useDeleteMovieMutation
+} = moviesApi

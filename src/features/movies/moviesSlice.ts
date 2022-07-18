@@ -14,11 +14,11 @@ export interface MoviesSliceState {
 
 const initialState: MoviesSliceState = {
   selectedMovie: null,
-  sortBy: 'release_date',
-  sortByTitle: 'Release Date',
+  sortBy: 'vote_average',
+  sortByTitle: 'Rating',
   genreSelected: 'all',
   genreSelectedTitle: 'All',
-  sortOrder: 'desc',
+  sortOrder: 'asc',
 }
 
 export const moviesSlice = createSlice({
