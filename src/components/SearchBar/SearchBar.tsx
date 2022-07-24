@@ -29,9 +29,10 @@ const SearchBar = () => {
           onChange={handleSearchInput}
         />
         <Button
-          primary
           classes={styles["search-button"]}
           onClick={handleSearchClick}
+          primary
+          submit
         >
           Search
         </Button>
