@@ -16,17 +16,17 @@ export const moviesApi = createApi({
   endpoints: (build) => ({
     getMovies: build.query<MovieResponse[], GetMoviesArgs>({
       query: ({sortBy, sortOrder, genreSelected, search, searchBy, filter}) => {
-        let url = `movies?sortBy=${sortBy}&sortOrder=${sortOrder}`
-        if (genreSelected) {
-          url += `&search=${genreSelected}&searchBy=genres`
-        }
+        const baseUrl = `movies?sortBy=${sortBy}&sortOrder=${sortOrder}`
+
+        let url = ''
         if (search) {
-          url += `&search=${search}&searchBy=${searchBy}`
+          url = url + `&search=${search}&searchBy=${searchBy}`
         }
         if (filter) {
-          url += `&filter=${filter}`
+          url = url + `&filter=${filter}`
         }
-        return url
+
+        return `${baseUrl}${url}`
       },
       transformResponse: (response: { data: MovieResponse[] }) => response.data,
     }),
