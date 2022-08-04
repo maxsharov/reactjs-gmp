@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="search-bar"
+>
+  <h2>
+    Find your movie
+  </h2>
+  <div
+    className="search-bar--content"
+  >
+    <input
+      className="search"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <button
+      className="button button--primary search-button"
+      onClick={[Function]}
+      type="submit"
+    >
+      Search
+    </button>
+  </div>
+</div>
+`;

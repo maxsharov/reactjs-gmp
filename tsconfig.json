@@ -4,8 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-//    "module": "es6",
-    "module": "esnext", // add this line
+    "module": "esnext",
     "target": "es5",
     "jsx": "react",
     "allowJs": true,

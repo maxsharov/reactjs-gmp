@@ -28,7 +28,10 @@ const Header: FC<{ handleAddMovie: () => void }> = ({
   }
 
   return (
-    <div className={styles["header"]}>
+    <div
+      className={styles["header"]}
+      data-testid="header-section"
+    >
       <div className={styles["top-section"]}>
         <Logo />
         <div className="add-movie-btn">

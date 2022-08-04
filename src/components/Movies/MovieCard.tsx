@@ -25,7 +25,6 @@ type MovieCardProps = Movie
 const MovieCard: FC<MovieCardProps> = ({
   id,
   title,
-  posterPath,
   poster_path,
   release_date,
   year,
@@ -94,6 +93,7 @@ const MovieCard: FC<MovieCardProps> = ({
         <div className={styles['movieCard--img']}>
           <img
             src={poster_path}
+            alt={title}
             onClick={() => onMovieSelect(id)}
           />
         </div>
