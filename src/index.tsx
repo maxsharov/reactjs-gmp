@@ -24,6 +24,9 @@ const store = configureStore({
   preloadedState
 })
 
+// @ts-ignore
+delete window.__PRELOADED_STATE__
+
 // import './styles/style.css'
 
 const container = document.getElementById('root')

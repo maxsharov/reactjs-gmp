@@ -17,8 +17,12 @@ module.exports = merge(common, {
   externals: [nodeExternals()],
   module: {
     rules: [
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
+      // },
       {
-        test: /\.scss$/i,
+        test: /\.(scss|css)$/i,
         use: [
           // 'style-loader',
           // 'css-modules-typescript-loader',
@@ -27,12 +31,12 @@ module.exports = merge(common, {
             options: {
               modules: {
                 exportOnlyLocals: true,
-                exportLocalsConvention: 'camelCase',
+                exportLocalsConvention: 'asIs',
                 localIdentName: '[local]_[hash:base64:5]'
               }
             }
           },
-          // 'sass-loader'
+          'sass-loader'
         ]
       },
       // {

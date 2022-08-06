@@ -10,11 +10,15 @@ module.exports = merge(common, {
   entry: './src/index.tsx',
   output: {
     filename: 'client_bundle.js',
-    path: path.resolve(__dirname, 'build/public'),
-    publicPath: '/build/public'
+    path: path.resolve(__dirname, 'build/public/'),
+    publicPath: '/'
   },
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
       {
         test: /\.s[ac]ss$/i,
         use: [
@@ -23,7 +27,7 @@ module.exports = merge(common, {
             loader: 'css-loader',
             options: {
               modules: {
-                exportLocalsConvention: 'camelCase',
+                exportLocalsConvention: 'asIs',
                 localIdentName: '[local]_[hash:base64:5]'
               }
             }

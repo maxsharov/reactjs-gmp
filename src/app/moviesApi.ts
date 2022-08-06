@@ -1,4 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {
+  buildCreateApi,
+  coreModule,
+  reactHooksModule,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react'
 import { MovieResponse } from '../interfaces'
 
 type GetMoviesArgs = {
@@ -9,6 +14,11 @@ type GetMoviesArgs = {
   searchBy?: string
   filter?: string
 }
+
+const createApi = buildCreateApi(
+  coreModule(),
+  reactHooksModule({ unstable__sideEffectsInRender: true })
+)
 
 export const moviesApi = createApi({
   reducerPath: 'moviesApi',
