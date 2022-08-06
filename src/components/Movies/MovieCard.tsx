@@ -72,7 +72,7 @@ const MovieCard: FC<MovieCardProps> = ({
           onClose={hideEditMovieModal}
         />
       }
-      <div className={styles['movieCard-content']}>
+      <div className={styles['movieCard--content']}>
         <div
           className={styles['menu-link']}
           onClick={handleMenuVisibility}
@@ -92,7 +92,7 @@ const MovieCard: FC<MovieCardProps> = ({
           </ul>
         </div>}
         <Link to={`?movie=${id}`}>
-          <div className={styles['movieCard-img']}>
+          <div className={styles['movieCard--img']}>
             <img
               src={poster_path}
               alt={title}
@@ -101,12 +101,12 @@ const MovieCard: FC<MovieCardProps> = ({
           </div>
         </Link>
 
-        <div className={styles['movieCard-titleYear']}>
-          <div className={styles['movieCard-title']}>{title}</div>
-          <div className={styles['movieCard-year']}>{year}</div>
+        <div className={styles['movieCard--titleYear']}>
+          <div className={styles['movieCard--title']}>{title}</div>
+          <div className={styles['movieCard--year']}>{year}</div>
         </div>
         {genres.length > 0 &&
-          <div className={styles['movieCard-tagline']}>{genres.join(', ')}</div>
+          <div className={styles['movieCard--tagline']}>{genres.join(', ')}</div>
         }
       </div>
     </div>

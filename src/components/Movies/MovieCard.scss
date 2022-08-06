@@ -4,7 +4,7 @@
   font-weight: 500;
   margin-bottom: 50px;
 
-  &-content {
+  &--content {
     width: 320px;
     margin: 0 auto;
     position: relative;
@@ -64,14 +64,14 @@
       }
     }
 
-    &-close {
+    &--close {
       cursor: pointer;
       margin-top: 10px;
       margin-right: 10px;
     }
   }
 
-  &-img {
+  &--img {
     margin-bottom: 20px;
     cursor: pointer;
 
@@ -80,22 +80,22 @@
     }
   }
 
-  &-titleYear {
+  &--titleYear {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
   }
-  &-title {
+  &--title {
     font-size: calc(var(--page-pad) * 1.1);
     line-height: calc(var(--page-pad) * 1.4);
   }
-  &-year {
+  &--year {
     border: 1px solid var(--grey-color);
     border-radius: 4px;
     padding: 3px 10px;
     font-size: calc(var(--page-pad) * 0.9);
   }
-  &-tagline {
+  &--tagline {
     font-size: calc(var(--page-pad) * 0.9);
     opacity: 0.5;
   }
