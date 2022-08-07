@@ -5,6 +5,7 @@ import EditMovieModal from './EditMovieModal'
 
 import styles from './MovieCard.scss'
 import useToggle from '../../utils/useToggle'
+import classNames from "classnames";
 
 export interface Movie {
   id?: number
@@ -71,7 +72,7 @@ const MovieCard: FC<MovieCardProps> = ({
           onClose={hideEditMovieModal}
         />
       }
-      <div className={styles['movieCard--content']}>
+      <div className={classNames('w-80', styles['movieCard--content'])}>
         <div
           className={styles['menu-link']}
           onClick={handleMenuVisibility}
@@ -80,30 +81,41 @@ const MovieCard: FC<MovieCardProps> = ({
           className={styles['movieCardMenu']}
         >
           <div
-            className={styles['movieCardMenu--close']}
+            className="mt-2.5 mr-2.5 cursor-pointer"
             onClick={handleMenuVisibility}
           >
             X
           </div>
-          <ul>
-            <li onClick={showEditMovieModal}>Edit</li>
-            <li onClick={showDeleteMovieModal}>Delete</li>
+          <ul className="w-full mb-3">
+            <li
+              className="flex"
+              onClick={showEditMovieModal}
+            >Edit</li>
+            <li
+              className="flex"
+              onClick={showDeleteMovieModal}
+            >Delete</li>
           </ul>
         </div>}
-        <div className={styles['movieCard--img']}>
+        <div className="mb-5 cursor-pointer">
           <img
+            className="w-80"
             src={poster_path}
             alt={title}
             onClick={() => onMovieSelect(id)}
           />
         </div>
 
-        <div className={styles['movieCard--titleYear']}>
-          <div className={styles['movieCard--title']}>{title}</div>
-          <div className={styles['movieCard--year']}>{year}</div>
+        <div className="flex justify-between mb-1">
+          <div className="text-lg">{title}</div>
+          <div>
+            <span className={classNames(
+              'text-sm', 'rounded', 'border', 'border-solid', 'border-gray-600', 'py-1', 'px-2.5'
+            )}>{year}</span>
+          </div>
         </div>
         {genres.length > 0 &&
-          <div className={styles['movieCard--tagline']}>{genres.join(', ')}</div>
+          <div className="opacity-50 text-sm">{genres.join(', ')}</div>
         }
       </div>
     </div>

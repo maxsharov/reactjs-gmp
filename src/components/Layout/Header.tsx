@@ -47,3 +47,4 @@ const Header: FC<{ handleAddMovie: () => void }> = ({
 }
 
 export default Header
+

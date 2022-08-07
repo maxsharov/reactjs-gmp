@@ -9,6 +9,7 @@ import { RootState } from '../../app/store'
 import { setGenre, setSelectedMovie, setSortBy } from '../../features/movies/moviesSlice'
 
 import styles from './MoviesList.scss'
+import classNames from "classnames";
 
 const MoviesList: FC = () => {
   const dispatch = useDispatch()
@@ -79,9 +80,9 @@ const MoviesList: FC = () => {
   return (
     <div>
       <div className={styles['movies--total']}>
-        <span className={styles['movies--total-value']}>{moviesTotal}</span> movies found
+        <span className="font-semibold">{moviesTotal}</span> movies found
       </div>
-      <div className={styles['movies--list']}>
+      <div className={classNames('flex', 'flex-wrap', 'justify-between')}>
         {movies.map(item => {
             const {
               id,
