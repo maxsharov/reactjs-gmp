@@ -5,6 +5,7 @@ import EditMovieModal from './EditMovieModal'
 
 import styles from './MovieCard.scss'
 import useToggle from '../../utils/useToggle'
+import {Link} from "react-router-dom";
 
 export interface Movie {
   id?: number
@@ -80,7 +81,7 @@ const MovieCard: FC<MovieCardProps> = ({
           className={styles['movieCardMenu']}
         >
           <div
-            className={styles['movieCardMenu--close']}
+            className={styles['movieCardMenu-close']}
             onClick={handleMenuVisibility}
           >
             X
@@ -90,13 +91,15 @@ const MovieCard: FC<MovieCardProps> = ({
             <li onClick={showDeleteMovieModal}>Delete</li>
           </ul>
         </div>}
-        <div className={styles['movieCard--img']}>
-          <img
-            src={poster_path}
-            alt={title}
-            onClick={() => onMovieSelect(id)}
-          />
-        </div>
+        <Link to={`?movie=${id}`}>
+          <div className={styles['movieCard--img']}>
+            <img
+              src={poster_path}
+              alt={title}
+              onClick={() => onMovieSelect(id)}
+            />
+          </div>
+        </Link>
 
         <div className={styles['movieCard--titleYear']}>
           <div className={styles['movieCard--title']}>{title}</div>

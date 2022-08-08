@@ -1,9 +1,13 @@
+import 'isomorphic-fetch'
 import React, { FC } from 'react'
 
 import Layout from './components/Layout/Layout'
-import {Navigate, Route, Routes} from "react-router-dom";
-import MoviesList from "./components/Movies/MoviesList";
+import { Navigate, Route, Routes } from 'react-router-dom'
+import MoviesList from './components/Movies/MoviesList'
 import Error from './components/Layout/Error'
+
+import './styles/style.css'
+import './styles/montserrat.css'
 
 const App: FC = () => {
   return (
@@ -15,8 +19,7 @@ const App: FC = () => {
         path="/"
         element={<Navigate to="/search" replace />}
       />
-      <Route path="*" element={<Error />}
-      />
+      <Route path="*" element={<Error />} />
     </Routes>
   )
 }

@@ -1,20 +1,36 @@
 import React from "react"
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-
-import { store } from './app/store'
+import { configureStore } from '@reduxjs/toolkit'
 
 import App from './App'
 
-import './styles/style.css'
+import { moviesApi } from './app/moviesApi'
+import moviesReducer from './features/movies/moviesSlice'
 
-const container = document.getElementById('app')
-const root = createRoot(container)
-root.render(
-  <BrowserRouter>
-    <Provider store={store}>
+// @ts-ignore
+const preloadedState = window.PRELOADED_STATE
+
+const store = configureStore({
+  reducer: {
+    [moviesApi.reducerPath]: moviesApi.reducer,
+    movies: moviesReducer
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(moviesApi.middleware),
+  preloadedState
+})
+
+// @ts-ignore
+delete window.__PRELOADED_STATE__
+
+const container = document.getElementById('root')
+
+const root = hydrateRoot(container,
+  <Provider store={store}>
+    <BrowserRouter>
       <App />
-    </Provider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </Provider>
 )

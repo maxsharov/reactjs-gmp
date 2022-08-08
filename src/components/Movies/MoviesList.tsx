@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, {FC, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
 
@@ -74,7 +74,7 @@ const MoviesList: FC = () => {
   }
 
   if (isLoading) return <div>is loading</div>
-  if (isFetching) return <div>is fetching</div>
+  // if (isFetching) return <div>is fetching</div>
 
   return (
     <div>
