@@ -1,14 +1,12 @@
 import React from "react"
-import {createRoot, hydrateRoot} from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { configureStore } from "@reduxjs/toolkit";
-
-// import { store } from './app/store'
+import { configureStore } from '@reduxjs/toolkit'
 
 import App from './App'
 
-import {moviesApi} from "./app/moviesApi";
+import { moviesApi } from './app/moviesApi'
 import moviesReducer from './features/movies/moviesSlice'
 
 // @ts-ignore
@@ -27,8 +25,6 @@ const store = configureStore({
 // @ts-ignore
 delete window.__PRELOADED_STATE__
 
-// import './styles/style.css'
-
 const container = document.getElementById('root')
 
 const root = hydrateRoot(container,
@@ -38,22 +34,3 @@ const root = hydrateRoot(container,
     </BrowserRouter>
   </Provider>
 )
-
-/**
- * import { configureStore } from '@reduxjs/toolkit'
- * import { moviesApi } from './moviesApi'
- * import moviesReducer from '../features/movies/moviesSlice'
- *
- * export const store = configureStore({
- *   reducer: {
- *     [moviesApi.reducerPath]: moviesApi.reducer,
- *     movies: moviesReducer
- *   },
- *   middleware: (getDefaultMiddleware) =>
- *     getDefaultMiddleware().concat(moviesApi.middleware),
- * })
- *
- * export type RootState = ReturnType<typeof store.getState>
- * export type AppDispatch = typeof store.dispatch
- *
- */

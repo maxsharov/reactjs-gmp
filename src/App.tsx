@@ -1,5 +1,4 @@
 import 'isomorphic-fetch'
-// import 'babel-polyfill'
 import React, { FC } from 'react'
 
 import Layout from './components/Layout/Layout'

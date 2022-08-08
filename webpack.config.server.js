@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge')
 const nodeExternals = require('webpack-node-externals')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 const common = require('./webpack.config.common')
 const path = require("path");
@@ -17,15 +16,9 @@ module.exports = merge(common, {
   externals: [nodeExternals()],
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
-      // },
       {
         test: /\.(scss|css)$/i,
         use: [
-          // 'style-loader',
-          // 'css-modules-typescript-loader',
           {
             loader: 'css-loader',
             options: {
@@ -39,17 +32,6 @@ module.exports = merge(common, {
           'sass-loader'
         ]
       },
-      // {
-      //   test: /\.(png|jpe?g|svg|gif)$/i,
-      //   type: 'asset/resource',
-      // }
-      // {
-      //   test: /\.css$/,
-      //   use: [
-      //     // MiniCssExtractPlugin.loader,
-      //     'css-loader/locals'
-      //   ]
-      // },
     ]
   }
 })

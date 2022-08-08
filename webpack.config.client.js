@@ -35,10 +35,6 @@ module.exports = merge(common, {
           'sass-loader',
         ]
       },
-      // {
-      //   test: /\.css$/,
-      //   use: [MiniCssExtractPlugin.loader, 'css-loader']
-      // },
     ]
   },
   plugins: [
